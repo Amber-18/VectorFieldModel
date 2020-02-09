@@ -20,8 +20,8 @@ import objects.Vector;
 
 public class FieldAnimation {
 	
-	private Vector initial_position = new Vector(70,20);
-	private Vector initial_velocity = new Vector(75,-75);
+	private Vector initial_position = new Vector(70, 70);
+	private Vector initial_velocity = new Vector(0,-30);
 	private double step = 0.1;
 	
 	private FieldObject object;
@@ -46,10 +46,10 @@ public class FieldAnimation {
 		
 		Field field = new Field(2);
 		
-		Polynomial x_to_x = new Polynomial(0, 0, -1);
-		Polynomial x_to_y = new Polynomial(0, 1);
+		Polynomial x_to_x = new Polynomial(0, -3);
+		Polynomial x_to_y = new Polynomial(0, 2);
 		Polynomial y_to_x = new Polynomial(0, 1);
-		Polynomial y_to_y = new Polynomial(1, 0, 1);
+		Polynomial y_to_y = new Polynomial(0, -3);
 		
 		field.addPolynomial(Dimension.X, Dimension.X, x_to_x);
 		field.addPolynomial(Dimension.Y, Dimension.X, x_to_y);
