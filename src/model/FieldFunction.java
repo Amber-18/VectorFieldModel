@@ -1,20 +1,18 @@
-package mathobjects;
+package model;
 
-import model.Field;
-import model.Object;
-
-public abstract class Function {
+public abstract class FieldFunction {
 	
-	// access to
+	// need access to
 	// list of objects and properties in them
 	// location
+	// time
 	// all fields
-	
+	protected double time;
 	protected Object[] objects;
 	protected Field[] fields;
 	
-	public Function() {
-		// empty
+	public FieldFunction() {
+		// do nothing
 	}
 	
 	public void setVars(Object[] o, Field[] f) {
@@ -22,5 +20,6 @@ public abstract class Function {
 		fields = f;
 	}
 	
-	public abstract double calculate(double... location);
+	public abstract double calculate(double time, double... location);
+
 }

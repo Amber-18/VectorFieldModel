@@ -1,8 +1,6 @@
 package model;
 
 import math.BasicMath;
-import mathobjects.DynamicFunction;
-import mathobjects.Function;
 import mathobjects.Vector;
 
 public class Space {
@@ -32,7 +30,7 @@ public class Space {
 		
 	}
 	
-	public void setFieldFunctions(int index, DynamicFunction... f) {
+	public void setFieldFunctions(int index, FieldFunction... f) {
 		if(f.length != dim) return;
 		
 		for(int i = 0; i < f.length; ++i) {
@@ -42,7 +40,7 @@ public class Space {
 		fields[index].setFunctions(f);
 		
 	}
-	public void setObjectFieldFunctions(int obj, DynamicFunction... f) {
+	public void setObjectFieldFunctions(int obj, FieldFunction... f) {
 		if(f.length != dim) return;
 		
 		for(int i = 0; i < f.length; ++i) {

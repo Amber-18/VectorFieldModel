@@ -1,7 +1,5 @@
 package model;
 
-import mathobjects.DynamicFunction;
-import mathobjects.Function;
 import mathobjects.Vector;
 
 public class Object {
@@ -32,7 +30,7 @@ public class Object {
 		return this.position;
 	}
 
-	public void setFieldFunctions(DynamicFunction... f) {
+	public void setFieldFunctions(FieldFunction... f) {
 		field.setFunctions(f);
 	}
 	

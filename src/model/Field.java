@@ -1,15 +1,14 @@
 package model;
 
-import mathobjects.DynamicFunction;
 import mathobjects.Vector;
 
 public class Field {
 	
-	private DynamicFunction[] functions;
+	private FieldFunction[] functions;
 	private int dim;
 	
 	public Field(int dimensions) {
-		functions = new DynamicFunction[dimensions];
+		functions = new FieldFunction[dimensions];
 		dim = dimensions;
 	}
 	
@@ -32,7 +31,7 @@ public class Field {
 		return vectorAt(time, location.toArray());
 	}
 	
-	public void setFunctions(DynamicFunction... f) {
+	public void setFunctions(FieldFunction... f) {
 		if(f.length != dim) return;
 		
 		for(int i = 0; i < f.length; ++i) {

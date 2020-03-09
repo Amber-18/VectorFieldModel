@@ -1,8 +1,8 @@
 package driver;
 
-import mathobjects.DynamicFunction;
+import model.FieldFunction;
 
-public class Script extends DynamicFunction {
+public class Script extends FieldFunction {
 	
 	public Script() {
 		super();
@@ -15,9 +15,8 @@ public class Script extends DynamicFunction {
 		value += time*2;
 		value += location[2];
 		value *= objects[3].getProperty(3);
-		value += fields[3].vectorAt(location).get(2);
+		value += fields[3].vectorAt(time, location).get(2);
 		return value;
-	}
-	
+	}	
 	
 }
