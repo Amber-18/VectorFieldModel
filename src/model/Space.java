@@ -58,6 +58,17 @@ public class Space {
 		objects[obj].setProperty(prop, value);
 	}
 	
+	public Vector getObjectPos(int i) {
+		return objects[i].getPosition().clone(); // to prevent modification
+	}
+	public Vector[] getObjectsPos() {
+		Vector[] pos = new Vector[objects.length];
+		for(int i = 0; i < pos.length; ++i) {
+			pos[i] = objects[i].getPosition().clone(); // to prevent modification
+		}
+		return pos;
+	}
+	
 	public void setStepSize(double x) {
 		if(x < 0 || x > 1) 
 			return;
@@ -91,7 +102,7 @@ public class Space {
 	 * Keep count of actually elapsed_time until you reach the given time
 	 * 
 	 */
-	public void runFor(double start_time, double time_to_elapse) {
+	public void run(double start_time, double time_to_elapse) {
 		
 		double total_time_elapsed = start_time;
 		double time_elapsed = 0; // start with time_elapsed = 0;

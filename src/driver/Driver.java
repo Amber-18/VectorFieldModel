@@ -10,10 +10,10 @@ public class Driver {
 		// Object
 		// Function
 		
-		// TODO allow functions to access time_elapsed as a total,
+		// allow functions to access time_elapsed as a total,
 		// not a relative amount, this is to make fields dynamic
 		
-		// TODO perhaps do this to make dynamic fields
+		// perhaps do this to make dynamic fields
 		// in space.run(time_start, time_to_elapse)
 		// give (time_start + elapsed_time) to functions to
 		// allow them the current actual time
@@ -35,5 +35,9 @@ public class Driver {
 		
 		Script script = new Script();
 		space.setObjectFieldFunctions(0, script, script);
+		
+		double start_time = 0;
+		double time_to_elapse = 1;
+		space.run(start_time, time_to_elapse);
 	}
 }
