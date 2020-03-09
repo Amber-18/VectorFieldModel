@@ -10,6 +10,19 @@ public class Driver {
 		// Object
 		// Function
 		
+		// TODO allow functions to access time_elapsed as a total,
+		// not a relative amount, this is to make fields dynamic
+		
+		// TODO perhaps do this to make dynamic fields
+		// in space.run(time_start, time_to_elapse)
+		// give (time_start + elapsed_time) to functions to
+		// allow them the current actual time
+		// thus we have, space.run(0,40)
+		// run the model starting at time 0 for 40 units of time
+		// or space.run(40,41), start at time 40, go for 41 units of time
+		
+		// thus we can have dynamic fields
+		
 		int dim = 2;
 		int numFields = 1;
 		int numObjects = 1;

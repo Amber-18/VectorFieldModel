@@ -1,5 +1,6 @@
 package model;
 
+import mathobjects.DynamicFunction;
 import mathobjects.Function;
 import mathobjects.Vector;
 
@@ -31,19 +32,19 @@ public class Object {
 		return this.position;
 	}
 
-	public void setFieldFunctions(Function... f) {
+	public void setFieldFunctions(DynamicFunction... f) {
 		field.setFunctions(f);
 	}
 	
-	public Vector getFieldForce(double... location) {
-		return getFieldForce(new Vector(location));
+	public Vector getFieldForce(double time, double... location) {
+		return getFieldForce(time, new Vector(location));
 	}
 	
-	public Vector getFieldForce(Vector location) {
+	public Vector getFieldForce(double time, Vector location) {
 		if(field == null)
 			return new Vector(location.length());
 		else
-			return field.vectorAt(location);
+			return field.vectorAt(time, location);
 	}
 	
 	public void setProperty(int index, double value) {

@@ -1,6 +1,7 @@
 package model;
 
 import math.BasicMath;
+import mathobjects.DynamicFunction;
 import mathobjects.Function;
 import mathobjects.Vector;
 
@@ -31,7 +32,7 @@ public class Space {
 		
 	}
 	
-	public void setFieldFunctions(int index, Function... f) {
+	public void setFieldFunctions(int index, DynamicFunction... f) {
 		if(f.length != dim) return;
 		
 		for(int i = 0; i < f.length; ++i) {
@@ -41,7 +42,7 @@ public class Space {
 		fields[index].setFunctions(f);
 		
 	}
-	public void setObjectFieldFunctions(int obj, Function... f) {
+	public void setObjectFieldFunctions(int obj, DynamicFunction... f) {
 		if(f.length != dim) return;
 		
 		for(int i = 0; i < f.length; ++i) {
@@ -92,21 +93,24 @@ public class Space {
 	 * Keep count of actually elapsed_time until you reach the given time
 	 * 
 	 */
-	public void runFor(double time) {
+	public void runFor(double start_time, double time_to_elapse) {
 		
+		double total_time_elapsed = start_time;
 		double time_elapsed = 0; // start with time_elapsed = 0;
 		// until time_elapsed is "basically" equal to time
-		while(time_elapsed < time) {
+		while(time_elapsed < time_to_elapse) {
 			
 			// if the remaining time is greater than step size
-			if((time-time_elapsed) > step_size) {
+			if((time_to_elapse - time_elapsed) > step_size) {
 				// update with step size and add the actual step taken to t_e
-				time_elapsed += update(step_size);
+				time_elapsed += update(total_time_elapsed, step_size);
+				total_time_elapsed += time_elapsed;
 				
 			} else {
 				// if the remaining time is not greater, then update with
 				// whatever distance/time is left and again add the actual
-				time_elapsed += update(time-time_elapsed);
+				time_elapsed += update(total_time_elapsed, time_to_elapse - time_elapsed);
+				total_time_elapsed += time_elapsed;
 			}
 		}
 		
@@ -130,7 +134,7 @@ public class Space {
 	* Now have new position
 	* 
 	*/
-	private double update(double step_size) {
+	private double update(double time, double step_size) {
 				
 		// each object will be going diff speeds
 		// we will have a max acceleration of some number
@@ -157,7 +161,7 @@ public class Space {
 		int max_prop_accel = -1; // for keeping track of the 
 		// biggest prop_accel that is greater than max_accel
 		for(int i = 0; i < objects.length; ++i) {
-			prop_accel[i] = getForce(objects[i].getPosition());
+			prop_accel[i] = getForce(time, objects[i].getPosition());
 			if(BasicMath.size(prop_accel[i]) > max_accel) {
 				if(max_prop_accel == -1) {
 					max_prop_accel = i;
@@ -221,7 +225,7 @@ public class Space {
 	 * Automatically takes into account fields of objects
 	 * and the multiple fields in this space
 	 */
-	private Vector getForce(Vector location) {
+	private Vector getForce(double time, Vector location) {
 		Vector force = new Vector(dim);
 		
 		Vector obj_position;
@@ -230,7 +234,7 @@ public class Space {
 			// need a location w/ respect to each object
 			obj_position = objects[i].getPosition().clone();
 			obj_position.scale(-1);
-			force.add(objects[i].getFieldForce(Vector.add(obj_position, location)));
+			force.add(objects[i].getFieldForce(time, Vector.add(obj_position, location)));
 		}
 		
 		// now have the forces from each of the object's fields
@@ -238,7 +242,7 @@ public class Space {
 		// then return the final sum, the final resulting force vector
 		
 		for(int i = 0; i < fields.length; ++i) {
-			force.add(fields[i].vectorAt(location));
+			force.add(fields[i].vectorAt(time, location));
 		}
 		
 		return force;
