@@ -2,7 +2,7 @@ package tests;
 
 import java.util.Arrays;
 
-import objects.Matrix;
+import mathobjects.Matrix;
 
 public class MatrixTest {
 

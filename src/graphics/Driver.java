@@ -15,9 +15,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Path;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import objects.Polynomial;
+import mathobjects.Polynomial;
 
 public class Driver extends Application {
 	
@@ -29,16 +30,18 @@ public class Driver extends Application {
 	private Scene scene;
 	private Pane root;
 	private GraphUI Graph = new GraphUI(new Stage());
+	private Data data = new Data();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		
-		Graph.show();
-		Graph.run();
+		 Graph.show();
+		 //Graph.run();
 		
-		// this.stage = stage;
-		// setup();
-		// show();
+		 // this.stage = stage;
+		 // setup();
+		 // show();
+		 
 	}
 	
 	public static void main(String args[]) {
@@ -67,31 +70,51 @@ public class Driver extends Application {
 	}
 	
 	public void addUserInputs(GridPane root) {
-		Spinner<Integer> spinner = new Spinner<Integer>();
+		root.add(addEquations(), 0, 1);
 		 
         
 	}
 	
 	
-	private TitledPane addSpinner(String title, Spinner<Integer> spinner, double valueToChange) {
-				
-		int initialValue = 0;
-		 
-        // Set spinner values
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 99, initialValue);
-        spinner.setValueFactory(valueFactory);
+	private TitledPane addEquations() {
+		GridPane grid = new GridPane();
 		
-//        spinner.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//            	
-//            	Graph = new GraphUI(new Stage());
-//            	
-//            }
-//        });
+		Text text = new Text("Input dimension :: Output dimension");
+		
+		Label x_to_x = new Label("x :: x");	
+		TextField e_x_to_x = new TextField("Enter equation...");
+		
+		Label x_to_y = new Label("x :: y");	
+		TextField e_x_to_y = new TextField("Enter equation...");
+		
+		Label y_to_x = new Label("y :: x");	
+		TextField e_y_to_x = new TextField("Enter equation...");
+		
+		Label y_to_y = new Label("y :: y");	
+		TextField e_y_to_y = new TextField("Enter equation...");		
+		
+		Button submit = new Button("Enter!");
+		submit.setText("Graph!");
+		 
+		submit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            	String _1 = e_x_to_x.getText();
+            	String _2 = e_x_to_y.getText();
+            	String _3 = e_y_to_x.getText();
+            	String _4 = e_y_to_y.getText();
+            	data.setPoly(_1, _2, _3, _4);
+            	// TODO get strings from UI, convert to poly in Data
+            	// transfer poly's from data to graph
+            	// Graph.setPoly(data.getPoly());
+            	
+            }
+        });
+		
+		
         
-        
-		return new TitledPane(title, spinner);
+		// return new TitledPane(title, spinner);
+		return null;
 		
 	}
 	

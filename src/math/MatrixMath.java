@@ -1,7 +1,7 @@
 package math;
 
-import objects.Matrix;
-import objects.Vector;
+import mathobjects.Matrix;
+import mathobjects.Vector;
 
 public class MatrixMath {
 	

@@ -1,4 +1,4 @@
-package objects;
+package mathobjects;
 
 import math.MatrixMath;
 
@@ -44,6 +44,15 @@ public class Vector extends Matrix {
 	
 	public Vector clone() {
 		return new Vector(this);
+	}
+	
+	public void add(Vector a) {
+		if(!MatrixMath.hasSameDimensions(this, a)) return;
+		double value = 0;
+		for(int i = 0; i < this.length(); ++i) {
+			value = this.get(i) + a.get(i);
+			this.set(i, value);
+		}
 	}
 	
 	public static Vector add(Vector a, Vector b) {

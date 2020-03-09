@@ -11,69 +11,46 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import list.LinkedList;
+import mathobjects.Polynomial;
+import mathobjects.Vector;
 import objects.Dimension;
 import objects.Field;
 import objects.FieldObject;
-import objects.LinkedList;
-import objects.Polynomial;
-import objects.Vector;
 
 public class FieldAnimation {
 	
-	private Vector initial_position = new Vector(70, 70);
-	private Vector initial_velocity = new Vector(0,-30);
-	private double step = 0.1;
+	private Data data;
+	private Pane root;
+	private PathTransition pathTransition;
 	
 	private FieldObject object;
-	private Circle dot;
+	private Field field;
+	private Vector initial_position;
+	private Vector initial_velocity;
+	private double step;
+	private int num_steps;
+	private int duration;
+	private double max_velocity;
 		
-	public FieldAnimation(Pane root) {
-		dot = new Circle();
-		dot.setCenterX(0);
-		dot.setCenterY(0);
-		dot.setRadius(6);
-		dot.setFill(Color.DARKBLUE);
-		
+	public FieldAnimation(Pane root, Data data) {
+		extract();
+		setupField();
+		setupGraphics();
+	}
+	
+	private void setupGraphics(){
+		Circle dot = new Circle(0, 0, 5, Color.DARKBLUE);
 		root.getChildren().add(dot);
 		
-		object = null;
-		setup();
-		
-		
-	}
-	
-	private void setup() {
-		
-		Field field = new Field(2);
-		
-		Polynomial x_to_x = new Polynomial(0, -3);
-		Polynomial x_to_y = new Polynomial(0, 2);
-		Polynomial y_to_x = new Polynomial(0, 1);
-		Polynomial y_to_y = new Polynomial(0, -3);
-		
-		field.addPolynomial(Dimension.X, Dimension.X, x_to_x);
-		field.addPolynomial(Dimension.Y, Dimension.X, x_to_y);
-		field.addPolynomial(Dimension.X, Dimension.Y, y_to_x);
-		field.addPolynomial(Dimension.Y, Dimension.Y, y_to_y);
-		
-		object = new FieldObject(field);
-		
-		object.setPosition(initial_position);
-		object.setVelocity(initial_velocity);
-		object.setStep(step);
-		
-	}
-	
-	public Path setupPath(Pane root, int steps) {
-
-		Path path = new Path();
-		Path trace = new Path();
+		Path path = new Path(); // path of dot to follow
+		Path trace = new Path(); // copy of path to put on graph
 		
 		path.getElements().add(new MoveTo(initial_position.get(0), initial_position.get(1)));
 		trace.getElements().add(new MoveTo(initial_position.get(0), initial_position.get(1)));
 		
 		double x,y;
-		for(int i = 0; i < steps; ++i) {
+		for(int i = 0; i < num_steps; ++i) {
 			x = object.getPosition().get(0);
 			y = object.getPosition().get(1);
 			path.getElements().add(new LineTo(x,y));
@@ -84,27 +61,41 @@ public class FieldAnimation {
 			trace.setStroke(Color.ORANGERED);
 
 			object.update();
-			
 		}
 		
 		root.getChildren().add(trace);
 		
-		return path;
-	}
-	
-	
-	public void run(Path path, Duration duration) {
-		
-		PathTransition pathTransition = new PathTransition();
-		pathTransition.setDuration(duration);
+		pathTransition = new PathTransition();
+		pathTransition.setDuration(new Duration(duration));
 		pathTransition.setPath(path);
 		pathTransition.setNode(dot);
 		pathTransition.setOrientation(PathTransition.OrientationType.NONE);
 		pathTransition.setCycleCount(Timeline.INDEFINITE);
 		pathTransition.setAutoReverse(false);
+	}
+	
+	private void setupField() {
+		// 2d field
+		field = new Field(2);
+		data.getPoly(field);
+		object = new FieldObject(field);
 		
+		object.setPosition(initial_position);
+		object.setVelocity(initial_velocity);
+		object.setStep(step);
+	}
+	
+	public void run() {
 		pathTransition.play();
-		
+	}
+	
+	private void extract() {
+		initial_position = data.getInitialPosition();
+		initial_velocity = data.getInitialVelocity();
+		step = data.getStepSize();
+		num_steps = data.getNumStep();
+		max_velocity = data.getMaxVelocity();
+		duration = data.getDuration();
 	}
 
 }

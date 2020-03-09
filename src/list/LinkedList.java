@@ -1,4 +1,4 @@
-package objects;
+package list;
 
 public class LinkedList<T> {
 	

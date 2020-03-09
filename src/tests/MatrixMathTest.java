@@ -1,10 +1,10 @@
 package tests;
 
-import objects.Matrix;
-import objects.Vector;
 import java.util.Arrays;
 
 import math.MatrixMath;
+import mathobjects.Matrix;
+import mathobjects.Vector;
 
 public class MatrixMathTest {
 

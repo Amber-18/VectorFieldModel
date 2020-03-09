@@ -1,6 +1,6 @@
 package tests;
 
-import objects.LinkedList;
+import list.LinkedList;
 
 public class LinkedListTest {
 	

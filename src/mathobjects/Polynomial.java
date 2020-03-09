@@ -1,4 +1,6 @@
-package objects;
+package mathobjects;
+
+import math.BasicMath;
 
 public class Polynomial {
 	
@@ -12,32 +14,19 @@ public class Polynomial {
 	 * If any are equal to zero, input zero
 	 * **/
 	public Polynomial(double... coefficients) {
+		super();
 		this.coefficients = coefficients;
 	}
 	
 	public double calculate(double input) {
 		double output = 0;
 		for(int i = 0; i < coefficients.length; ++i) {
-			output += coefficients[i] * raiseTo(input, i);
+			output += coefficients[i] * BasicMath.raiseTo(input, i);
 		}
 		
 		return output;
 	}
-	
-	private double raiseTo(double input, int exponent) {
-		double value = 1;
-		
-		if(exponent == 0) return 1;
-		
-		if(exponent < 0) {
-			return 1 / raiseTo(input, -1*exponent);
-		}
-		
-		for(int i = 0; i < exponent; ++i) {
-			value *= input;
-		}
-		
-		return value;
-	}
+
+
 
 }
